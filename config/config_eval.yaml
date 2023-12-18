@@ -1,0 +1,89 @@
+alg: mend
+lr: 1e-5
+edit_lr: 1e-2
+seed: 0
+debug: False
+model_save_pt: 5000
+edit_bs: 1
+silent: False
+max_iters: 500000
+log_interval: 1000
+val_interval: 5000
+lr_lr: 1e-3
+batch_size: 16
+val_batch_size: 10
+accumulate_bs: 20
+cedit: 0.1
+cloc: 1.0
+cbase: 1.0
+use_adv: False
+val_steps: 500
+device: cuda
+base_loss: distill
+oracle: False
+train: True
+train_base: True
+opt: Adam
+single_batch: False
+archive: null
+grad_clip: 100.
+ref: null
+early_stop_patience: 20000
+early_stop_key: "loss/total_edit_val"
+dropout: 0.0
+tokenizer: null
+results_dir: null
+no_grad_layers: null
+eval_only: False
+half: False
+save: False
+model_save_dir: null
+
+model:
+  pt: null
+
+data:
+  trian_data_path: null
+  valid_data_path: null
+  path: null
+  rephrase: true
+  zsre_nq: true
+  nq_path: null
+  wiki_webtext: False
+  n_edits: 18
+  use_gt: true
+  short_ans: false
+
+eval:
+  verbose: True
+  log_interval: 100
+  final_eval: True
+  mend_model_path: null
+  base_lm_path: null
+  bart_qa_path: null
+  lm_type: null
+  do_sample_irre: True
+  ft_lr: 1e-5
+  metrics: []
+  input_path: null
+  update_method: naive
+  estab_method: naive
+  max_ft_step: 50
+  update_world: false
+  rule_target: null
+  use_rules: false
+  do_bc: false
+  do_fc: false
+  skip_update: false
+  hid_out_file: null
+  grad_out_file: null
+  memit_params_path: null
+  memit_cache_template_dir: null
+  
+  
+hydra:
+  run:
+    dir: ./outputs/${now:%Y-%m-%d_%H-%M-%S_%f${uuid:}}
+  sweep:
+    dir: ./outputs/${now:%Y-%m-%d_%H-%M-%S_%f}
+    subdir: ${hydra.job.num}

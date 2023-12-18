@@ -1,12 +1,73 @@
-### Download
 
-#### DepEdit dataset
-The preprocessed data can be downloaded from [Google Drive link](https://drive.google.com/file/d/1sGasr5ffklLJmyN_Yw3pmt15BqD9MF5a/view?usp=sharing).
+####  DepEdit dataset
 
-### Format
+The preprocessed data can be downloaded from [this link](https://drive.google.com/file/d/1qVBgekrHZnPNyWuMkphtIaamESunrd1B/view?usp=sharing).
 
-The data is in json format and it has already prepared all the QA pairs in the both phases for specific facts and implications. 
+In the original experiments, the unrelated facts are sampled on the fly. You can also use [this version](https://drive.google.com/file/d/1H11T5n-ZXiwpR9lcYiuIkd6uAXatQsSt/view?usp=sharing), where the unrelated facts are sampled beforehand. If so, setting `do_sample_irre=False` in `config_eval.yaml`.
 
-* `init`: the knowledge set for establish phase, including `facts` and `rule`. The derived implications are under `queries`.
-* `0`, `1`, `2`: each for a copy of establihsed model during update phase
-* `score`: the scores given from the annotator.
+####  Format
+
+The data is in json format and it has already preprocessed all the QA pairs of specific facts and implications for both phases. The schema is explained as below. `init` is for the establish phase, while `0`, `1`, `2` are for the update phase.
+
+```javascript
+{
+    "init": {
+        ...
+    },
+    "0": {
+        "facts": [
+            {
+                "q": query,
+                "a": answer,
+                "trips": (subject, relation, object),
+                "is_update": the fact is updated
+            }
+        ],
+        "rule": {
+            "pre1": premise-1 template,
+            "pre2": premise-2 template,
+            "imp": implication template
+        },
+        "queries": {
+            "original": {
+                "facts": [
+                    {
+                    "q" the same query,
+                    "a": answer
+                    },
+                    ...
+                ],
+                "inference": [
+                    {
+                    "q" query of implications,
+                    "a": answer
+                    },
+                    ...
+                ]
+            },
+            "semantic-equiv": {
+                "facts": [
+                    {
+                    "q" different query,
+                    "a": answer
+                    },
+                    ...
+                ],
+                ...
+            },
+        }
+    },
+    "1": {
+        ...
+    },
+    "2": {
+        ...
+    },
+    "score": two plausbility scores of the rule
+}
+```
+
+####  Others
+Besides the datasets used for experiments, there are also (1) a larger test set that includes extra rules, rated with scores `[4,5]` (i.e. *must be true* and *likely to be true*) (2) the complete set of rule candidates, along with their corresponding scores provided by the annotators.
+
+If you are interested in accessing either of these resources, please send an email request to zichao.li AT mail.mcgill.ca

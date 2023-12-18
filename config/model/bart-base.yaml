@@ -1,0 +1,16 @@
+name: facebook/bart-base
+path: null
+class_name: BartForConditionalGeneration
+tokenizer_class: AutoTokenizer
+tokenizer_name: facebook/bart-base
+inner_params:
+- model.encoder.layers.4.fc1.weight
+- model.encoder.layers.4.fc2.weight
+- model.encoder.layers.5.fc1.weight
+- model.encoder.layers.5.fc2.weight
+- model.decoder.layers.4.fc1.weight
+- model.decoder.layers.4.fc2.weight
+- model.decoder.layers.5.fc1.weight
+- model.decoder.layers.5.fc2.weight
+
+pt: null
